@@ -1,36 +1,23 @@
 import React, { useState } from 'react';
 import SettingSVG from '../../assets/svgs/personl_settings.svg'
 import { auth } from '../../config/firebase';
-import { db } from '../../config/firebase';
-import { doc, setDoc } from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
 const StudentForm = ({setPage}) => {
   const [pState, setPState] = useState(false)
-  const [studentDetails, setStudentDetails] = useState({
-    studentName: '',
-    dob:'',
-    gender: 'other',
-    nationality: 'India',
-    address: '',
-    phoneNumber: '',
-    email: auth?.currentUser?.email,
-    schoolName: '',
-    language: '',
-    git: '',
-    edu:'',
-    about: ''
+  const [consumerDetails, setConsumerDetails] = useState({
+   consumerNo:"",
+   consumerName:"",
+   nationality:"India",
+   state:"Tamil nadu",
+   charges:0,
+   totalUnit:0,
+   email:auth?.currentUser?.email,
   });
-  const input_box="border-b-2 w-full pl-8 p-3 mb-6  bg-stone-100 rounded-2xl shadow-sm"
+  const input_box="border-b-2 w-full text-black pl-8 p-3 mb-6  bg-stone-100 rounded-2xl shadow-sm"
 const handleSubmit = async(e)=>{
     setPState(true)
     e.preventDefault()
-    const docRef = doc(db, "user", auth?.currentUser?.uid)
-    await setDoc(docRef, studentDetails).then(res=>{
-        setPage("student")
-    }).catch(e=>{
-      setPState(false)
-      alert(e.message.slice(22,-2))
-    })
+    localStorage.setItem("UserBasicDetails_SEMS",JSON.stringify(consumerDetails))
+    setPage("portalMain")
 
 }
 
@@ -42,88 +29,54 @@ const handleSubmit = async(e)=>{
           <h1 className="antialiased font-extrabold font text-3xl text-left mb-10">Enter Basic Details</h1>
           <form className='mt-5' onSubmit={(e)=> handleSubmit(e)}>
             <label htmlFor="uname" className="absolute pt-4 pl-2"></label>
-            <input type="text" name="uname" id="uname" placeholder="Enter your Fullname" required title="Username" className={input_box} onChange ={(e) => setStudentDetails({...studentDetails, studentName:e.target.value})}/>
-            <label htmlFor="dob">Select the date of Birth:</label>
-      
-            <input type="date" 
-            name="dob" 
-            id="dob"  
-            required 
-            title="dob" 
-            className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, dob:e.target.value})}/>
-            <select name="gender" id="gender" className={input_box} required onChange={(e)=> setStudentDetails({...studentDetails, gender:e.target.value})}>
-                <option value="">Choose your gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
+            <input type="text" name="uname" id="uname" value={consumerDetails?.consumerName} placeholder="Enter Consumer Name" required title="Username" className={input_box} onChange ={(e) => setConsumerDetails({...consumerDetails, consumerName:e.target.value})}/>
+            <label htmlFor="conNo" className="absolute pt-4 pl-2"></label>
+            <input type="number" name="conNo" id="conNo" placeholder="Enter Consumer No" min={0} required title="Consumer no" className={input_box} value={consumerDetails?.consumerNo} onChange ={(e) => setConsumerDetails({...consumerDetails, consumerNo:e.target.value})}/>
             <input type="text" 
-            value={"India"} 
-            name="nationality" 
-            id="nationality" 
-            placeholder="Enter your Nationality" 
-            required 
-            title="nationality" 
+            name="nat" 
+            id="nat" 
+            placeholder="Enter Nationality" 
+            required
+            value={consumerDetails.nationality}
+            title="nat" 
             className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, nationality:e.target.value})}/>
+            onChange={(e) => setConsumerDetails({...consumerDetails, nationality:e.target.value})}/>
             <input type="text" 
-            name="schoolName" 
-            id="schoolName" 
-            placeholder="Enter your institution name" 
-            required 
-            title="institution" 
+            name="state" 
+            id="state" 
+            placeholder="Enter State" 
+            required
+            value={consumerDetails.state}
+            title="state" 
             className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, schoolName:e.target.value})}/>
-            <input type="text" 
-            name="edu" 
-            id="edu" 
-            placeholder="Enter your Educational Background" 
+            onChange={(e) => setConsumerDetails({...consumerDetails, state:e.target.value})}/>
+            <input type="number" 
+            name="charges" 
+            id="charges" 
+            placeholder="Enter your state charge per unit" 
             required 
-            title="edu" 
+            title="charges" 
             className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, edu:e.target.value})}/>
+            onChange={(e) => setConsumerDetails({...consumerDetails, charges:e.target.value})}/>
             
-            <input type="text"  
-            name="lang" 
-            id="lang" 
-            placeholder="Preferred language" 
+            <input type="number"  
+            name="preUnit" 
+            id="preUnit" 
+            placeholder="Previous Total Unit" 
             required 
-            title="lang" 
+            title="unit" 
             className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, language:e.target.value})}/>
-            <textarea name="address" id="address" 
-            className={input_box} placeholder='Enter your address' required onChange={(e)=>setStudentDetails({...studentDetails, address:e.target.value})}></textarea>
-            <input type="tel" 
-            min={10}
-            max={10}
-            name="mobile" 
-            id="mobile" 
-            placeholder="Enter your Mobile number" 
-            required 
-            title="mobile" 
-            className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, phoneNumber:e.target.value})}/>
+            onChange={(e) => setConsumerDetails({...consumerDetails, totalUnit:e.target.value})}/>
             <input type="email" 
             name="email" 
             id="email" 
             placeholder="Enter your email"
-            value={auth?.currentUser?.email} 
+            value={consumerDetails.email} 
             required 
             title="email" 
             className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, email:e.target.value})}/>
-            <input type="text" 
-            name="git" 
-            id="git" 
-            placeholder="Enter your GITHub handle" 
-            title="git" 
-            className={input_box} 
-            onChange={(e) => setStudentDetails({...studentDetails, git:e.target.value})}/>
-            <textarea name="" id="" 
-            className={input_box} 
-            placeholder='Something about you'
-            onChange={(e) => setStudentDetails({...studentDetails, about:e.target.value})}></textarea>
+            onChange={(e) => setConsumerDetails({...consumerDetails, email:e.target.value})}/>
+    
             
            
             

@@ -34,6 +34,7 @@ function Login({setPage, checkBasics}) {
       try{
       await signInWithEmailAndPassword(auth, email, password).then(()=>{
         if(auth.currentUser?.emailVerified){
+          localStorage.setItem("isLoggedIn",true)
           checkBasics()
         }else{
           alert("Email not verified Yet, check you mail")
