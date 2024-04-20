@@ -10,7 +10,7 @@ function SideBar({setFragment, wideBar, setWideBar}) {
       <div className={wideBar?'flex items-center justify-between w-full px-5':""}>
       
       <IoReorderThree className={wideBar?"wide-sidebar-icon bg-green-600 text-gray-100 w-12 transition-all duration-500 m-3":"sidebar-icon transition-all duration-500"} onClick={()=>setWideBar(!wideBar)}/>
-      {wideBar?(<h1>SEM System</h1>):(<></>)}
+      {wideBar?(<h1 className=' font-bold'>SEM System</h1>):(<></>)}
       </div>
      
 

@@ -26,8 +26,13 @@ const AlertMessage = ({wideBar, setFragment,setPage}) => {
         <h1>All the Previous Generated Alert messages</h1>
       </div>
       <div className='flex flex-col justify-center items-center'>
-      {alertData.length==0?(
-        <div></div>
+      {alertData==null?(
+         <div className='flex items-center justify-center flex-col'>
+         <div className='flex justify-center items-center m-32 p-10 rounded-xl bg-slate-950'>
+         <h1 className='text-2xl font-bold'>No Alert messages</h1>
+       </div>
+      
+       </div>
       ):
       (
         alertData.map((alert, index) => (

@@ -72,7 +72,7 @@ const LiveGraph = ({on,height=350,className="overall"}) => {
             preAlert.push({name:className,time:Date.now()})
             localStorage.setItem("alert",JSON.stringify(preAlert))
           }
-          toast(`Alert: Your ${className} more...`, {
+          toast(`Alert: Your ${className} Consumes more...`, {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
