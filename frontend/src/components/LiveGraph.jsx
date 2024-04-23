@@ -65,12 +65,12 @@ const LiveGraph = ({on,height=350,className="overall"}) => {
         let rand = Math.floor(Math.random() * 100)
         console.log(rand)
         if(rand>95){
-          let preAlert =  JSON.parse(localStorage.getItem("alert"))
+          let preAlert =  JSON.parse(localStorage.getItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_alert`))
           if(preAlert==null){
-            localStorage.setItem("alert",JSON.stringify([{name:className, time:Date.now()}]))
+            localStorage.setItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_alert`,JSON.stringify([{name:className, time:Date.now()}]))
           }else{
             preAlert.push({name:className,time:Date.now()})
-            localStorage.setItem("alert",JSON.stringify(preAlert))
+            localStorage.setItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_alert`,JSON.stringify(preAlert))
           }
           toast(`Alert: Your ${className} Consumes more...`, {
             position: "top-right",

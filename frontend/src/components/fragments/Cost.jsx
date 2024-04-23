@@ -4,7 +4,7 @@ const Cost = ({wideBar, userData, setWideBar, setPage}) => {
   const [applianceData, setApplicanceData] = useState([])
   const [graphData, setGraphData] = useState([])
   useEffect(()=>{
-    let data = JSON.parse(localStorage.getItem("ApplianceData"))
+    let data = JSON.parse(localStorage.getItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_ApplianceData`))
     setApplicanceData(data!=null?data:[])
   },[])
   useEffect(()=>{

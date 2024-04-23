@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 const AlertMessage = ({wideBar, setFragment,setPage}) => {
   const [alertData,setAlertData] = useState([])
   useEffect(()=>{
-    setAlertData(JSON.parse(localStorage.getItem("alert")))
+    setAlertData(JSON.parse(localStorage.getItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_alert`)))
   },[])
   const stampToTime = (stamp) =>{
     const date = new Date(stamp);

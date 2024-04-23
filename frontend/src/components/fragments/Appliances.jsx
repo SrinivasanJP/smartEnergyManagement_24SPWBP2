@@ -13,20 +13,20 @@ const Appliances = ({wideBar, setFragment,setPage}) => {
     monitor:false
   })
   useEffect(()=>{
-    let data = JSON.parse(localStorage.getItem("ApplianceData"))
+    let data = JSON.parse(localStorage.getItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_ApplianceData`))
     setApplicanceData(data!=null?data:[])
   },[isClickedForm])
   const handleFormSubmit = (e)=>{
     e.preventDefault()
-    const preJson = JSON.parse(localStorage.getItem("ApplianceData"))
+    const preJson = JSON.parse(localStorage.getItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_ApplianceData`))
     if(preJson == null) {
       let newData = []
       newData.push(formData)
-      localStorage.setItem("ApplianceData",JSON.stringify(newData))
+      localStorage.setItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_ApplianceData`,JSON.stringify(newData))
     }
     else{
       preJson.push(formData)
-      localStorage.setItem("ApplianceData",JSON.stringify(preJson))
+      localStorage.setItem(`${JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email}_ApplianceData`,JSON.stringify(preJson))
       console.log(preJson)
     }
     setIsClickedForm(false)

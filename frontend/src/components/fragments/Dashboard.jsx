@@ -19,7 +19,7 @@ function Dashboard({wideBar, setFragment,setPage}) {
     setUserData(JSON.parse(localStorage.getItem("UserBasicDetails_SEMS")))
   },[])
   useEffect(()=>{
-    let data = JSON.parse(localStorage.getItem("ApplianceData"))
+    let data = JSON.parse(localStorage.getItem(`${(JSON.parse(localStorage.getItem("UserBasicDetails_SEMS"))?.email)}_ApplianceData`))
     setApplicanceData(data!=null?data:[])
   },[])
 
